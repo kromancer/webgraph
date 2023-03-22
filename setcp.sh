@@ -1,6 +1,13 @@
 #!/bin/sh
 
-sourcedir=$(cd -- "$(dirname ${BASH_SOURCE:-$0})" && pwd)
+if [ -n "$ZSH_VERSION" ]; then
+	# assume Zsh
+	sourcedir="${0:A:h}"
+else
+	# assume Bash
+	sourcedir=$(cd -- "$(dirname ${BASH_SOURCE:-$0})" && pwd)
+fi
+
 webgraphjars=$(find -L "$sourcedir" -maxdepth 1 -name "*.jar" | grep "webgraph-")
 count=$(echo "$webgraphjars" | wc -l)
 
